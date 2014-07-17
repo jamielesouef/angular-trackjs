@@ -1,0 +1,26 @@
+{
+    "name": "seek-trackjs",
+    "version": "0.0.1",
+    "description": "TrackJS angular exception decorator",
+    "main": "index.js",
+    "scripts": {
+        "test": "gulp test"
+    },
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "gulp": "^3.8.6",
+        "gulp-jshint": "^1.6.4",
+        "jshint-stylish": "^0.2.0",
+        "gulp-karma": "0.0.4",
+        "karma": "^0.12.9",
+        "karma-jasmine": "^0.1.5",
+        "karma-phantomjs-launcher": "^0.1.4",
+        "karma-coverage": "~0.1.5",
+        "gulp-uglify": "^0.2.1",
+        "gulp-header": "^1.0.2",
+        "gulp-concat": "^2.2.0",
+        "gulp-coveralls": "^0.1.2",
+        "gulp-clean": "^0.2.4"
+    }
+}
