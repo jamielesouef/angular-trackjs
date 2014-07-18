@@ -1,0 +1,28 @@
+{
+    "globals": {
+        "angular": true,
+        "require": true,
+        "inject": true,
+        "jasmine": true,
+        "module": true,
+        "it": false,
+        "console": false,
+        "describe": false,
+        "expect": false,
+        "beforeEach": false,
+        "spyOn": false,
+        "s": true
+    },
+    "curly": true,
+    "eqeqeq": true,
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "sub": true,
+    "undef": true,
+    "boss": true,
+    "eqnull": true,
+    "browser": true,
+    "globalstrict": true
+}

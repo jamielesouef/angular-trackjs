@@ -1,10 +1,10 @@
-(function(angular) {
+(function (angular) {
 
     'use strict';
 
-    var seekTrackJS = angular.module('angular-trackjs', []);
+    var angularTrackJs = angular.module('angular-trackjs', []);
 
-    seekTrackJS.config(function($provide) {
+    angularTrackJs.config(function ($provide) {
 
         $provide.decorator("$exceptionHandler", ["$delegate", "exceptionHandlerDecorator", function ($delegate, exceptionHandlerDecorator) {
             exceptionHandlerDecorator.decorate($delegate);
@@ -12,18 +12,18 @@
 
     });
 
-    seekTrackJS.factory('skTrackJSOptions', function () {
+    angularTrackJs.factory('skTrackJSOptions', function () {
 
-        var setTrackJSOption = function(option) {
+        var setTrackJSOption = function (option) {
             console.log(option);
         };
 
         return {
             set: setTrackJSOption
-        }
+        };
     });
 
-    seekTrackJS.factory('exceptionHandlerDecorator', function ($window) {
+    angularTrackJs.factory('exceptionHandlerDecorator', function ($window) {
         var decorate = function ($delegate) {
             return function (exception, cause) {
                 if ($window.trackJs) {
@@ -35,7 +35,20 @@
         };
 
         return {
-            decorate : decorate
+            decorate: decorate
         };
     });
-})(angular);
+
+
+    angularTrackJs.provider('TrackJs', function () {
+        this.configure = function (options) {
+            if (options) {
+                window.trackJs.configure(options);
+            }
+        };
+
+        this.$get = function () {
+        };
+    });
+})
+(angular);
