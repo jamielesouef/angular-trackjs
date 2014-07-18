@@ -1,4 +1,4 @@
 {
-    "strict-ssl": false,
-    "directory": "bower_components"
+  "strict-ssl": false,
+  "directory": "bower_components"
 }

@@ -1,42 +1,42 @@
 (function (angular) {
 
-    'use strict';
+  'use strict';
 
-    var angularTrackJs = angular.module('angular-trackjs', []);
+  var angularTrackJs = angular.module('angular-trackjs', []);
 
-    angularTrackJs.config(function ($provide) {
+  angularTrackJs.config(function ($provide) {
 
-        $provide.decorator("$exceptionHandler", ["$delegate", "exceptionHandlerDecorator", function ($delegate, exceptionHandlerDecorator) {
-            exceptionHandlerDecorator.decorate($delegate);
-        }]);
+    $provide.decorator("$exceptionHandler", ["$delegate", "exceptionHandlerDecorator", function ($delegate, exceptionHandlerDecorator) {
+      exceptionHandlerDecorator.decorate($delegate);
+    }]);
 
-    });
+  });
 
-    angularTrackJs.factory('exceptionHandlerDecorator', function ($window) {
-        var decorate = function ($delegate) {
-            return function (exception, cause) {
-                if ($window.trackJs) {
-                    $window.trackJs.track(exception);
-                }
+  angularTrackJs.factory('exceptionHandlerDecorator', function ($window) {
+    var decorate = function ($delegate) {
+      return function (exception, cause) {
+        if ($window.trackJs) {
+          $window.trackJs.track(exception);
+        }
 
-                $delegate(exception, cause);
-            };
-        };
+        $delegate(exception, cause);
+      };
+    };
 
-        return {
-            decorate: decorate
-        };
-    });
+    return {
+      decorate: decorate
+    };
+  });
 
 
-    angularTrackJs.provider('TrackJs', function () {
-        this.configure = function (options) {
-            if (options) {
-                window.trackJs.configure(options);
-            }
-        };
+  angularTrackJs.provider('TrackJs', function () {
+    this.configure = function (options) {
+      if (options) {
+        window.trackJs.configure(options);
+      }
+    };
 
-        this.$get = angular.noop;
-    });
+    this.$get = angular.noop;
+  });
 })
 (angular);
