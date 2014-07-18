@@ -4,6 +4,23 @@ angular-trackjs
 A simple AngularJS module for adding TrackJS to angulars exception handler.
  
 You need to include the trackJS script before your angular app. You can signup at [trackjs.com](trackjs.com)
+
+##Install
+
+####Bower
+
+	bower install angular-trackjs --save
+
+#### git
+
+In your vendors folder:
+	
+	git clone https://github.com/jamielesouef/angular-trackjs.git
+	
+###Add to your project
+Add after angular files but before your app files
+
+	<script src="your_bower_path/angular-trackjs/dist/angular-trackjs.min.js"></script>
         
 ##Usage
 
@@ -21,3 +38,11 @@ If you want to pass options to trackJS, you can via the TrackJsProvider in your 
       		version: ""
     	});
 	});
+
+##Tests & Build
+angular-trackjs uses gulp to run test and build tasks
+	
+	npm install
+	gulp test
+	gulp build
+	
