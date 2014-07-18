@@ -54,7 +54,7 @@
                 '/*!',
                 ' * <%= title %> v<%= version %>',
                 ' *',
-                ' * © <%= new Date().getFullYear() %>, <%= author.name %>',
+                ' * © <%= new Date().getFullYear() %>, <%= author %>',
                 ' */\n\n'
             ].join('\n'), pkg))
             .pipe(gulp.dest('dist/'))
@@ -63,7 +63,7 @@
             .pipe(sourcemaps.init())
             .pipe(uglify())
             .pipe(header([
-                '/*! <%= title %> v<%= version %> © <%= new Date().getFullYear() %> <%= author.name %> */\n'
+                '/*! <%= title %> v<%= version %> © <%= new Date().getFullYear() %> <%= author %> */\n'
             ].join(''), pkg))
             .pipe(sourcemaps.write('/'))
             .pipe(gulp.dest('dist/'));

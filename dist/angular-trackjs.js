@@ -1,3 +1,9 @@
+/*!
+ * Angular TrackJs v0.0.1
+ *
+ * © 2014, Jamie Le Souef <jamielesouef@gmail.com>
+ */
+
 (function (angular) {
 
     'use strict';
