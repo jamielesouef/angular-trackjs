@@ -26,5 +26,9 @@
     "gulp-ng-annotate": "^0.2.0",
     "gulp-rename": "^1.2.0",
     "gulp-sourcemaps": "^1.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamielesouef/angular-trackjs.git"
   }
 }
