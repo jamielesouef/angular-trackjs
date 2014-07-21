@@ -8,7 +8,7 @@
 
   'use strict';
 
-  var angularTrackJs = angular.module('angular-trackjs', []);
+  var angularTrackJs = angular.module('trackJs', []);
 
   angularTrackJs.config(function ($provide) {
 

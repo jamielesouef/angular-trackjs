@@ -2,7 +2,7 @@
 
 describe('Factory: exceptionHandlerDecorator', function () {
 
-    beforeEach(module('angular-trackjs'));
+    beforeEach(module('trackJs'));
 
     var exceptionHandlerDecorator,
         $window;

@@ -27,7 +27,7 @@ Add after angular files but before your app files
 
 Just add the module as a depenancy. The module handles decorating Angular's $exceptionHandler.
 
-	var myApp = angular.module('myApp', ['angular-trackjs']);
+	var myApp = angular.module('myApp', ['trackJs']);
 
 If you want to pass options to trackJS, you can via the TrackJsProvider in your apps config block. All options can be found in the trackJS API [docs](http://docs.trackjs.com/Api_Reference/trackJs.configure).
 
