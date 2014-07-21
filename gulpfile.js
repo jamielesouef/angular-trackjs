@@ -81,6 +81,14 @@
   })
 
   /**
+   * Watch Task
+   */
+
+  gulp.task('watch', function () {
+    gulp.watch(['src/angular-trackjs.js', 'test/spec/**/*.js'], ['default']);
+  });
+
+  /**
    * Task Groups
    */
 

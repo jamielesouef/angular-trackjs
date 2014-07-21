@@ -5,9 +5,10 @@
   "description": "TrackJS angular exception decorator",
   "main": "dist/angular-trackjs.min.js",
   "scripts": {
-    "test": "bower install -f && gulp test",
+    "test": "gulp test",
     "build": "gulp build",
-    "coveralls": "gulp coveralls"
+    "coveralls": "gulp coveralls",
+    "postinstall": "node_modules/.bin/bower install"
   },
   "author": "Jamie Le Souef <jamielesouef@gmail.com>",
   "license": "MIT",

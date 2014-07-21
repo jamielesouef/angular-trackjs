@@ -34,6 +34,14 @@
     };
   });
 
+  angularTrackJs.factory('trackJs', function ($window) {
+    return {
+      track : function(message) {
+        $window.trackJs.track(message);
+      }
+    };
+  });
+
 
   angularTrackJs.provider('TrackJs', function () {
     this.configure = function (options) {
