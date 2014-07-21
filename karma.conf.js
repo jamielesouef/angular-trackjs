@@ -1,6 +1,7 @@
 // Karma configuration
 module.exports = function (config) {
   config.set({
+    basePath: '',
     frameworks: ['jasmine'],
     browsers: [ 'PhantomJS' ],
     reporters: [ 'progress', 'coverage' ],
@@ -9,7 +10,7 @@ module.exports = function (config) {
     },
     coverageReporter: {
       reporters: [
-        { type: 'html', dir: 'test/coverage/' }
+        {type: 'lcov', dir: 'test/coverage'}
       ]
     }
 

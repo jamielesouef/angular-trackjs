@@ -6,7 +6,8 @@
   "main": "dist/angular-trackjs.min.js",
   "scripts": {
     "test": "gulp test",
-    "build": "gulp build"
+    "build": "gulp build",
+    "coveralls": "gulp coveralls"
   },
   "author": "Jamie Le Souef <jamielesouef@gmail.com>",
   "license": "MIT",

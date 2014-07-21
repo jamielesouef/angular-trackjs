@@ -1,5 +1,4 @@
 (function () {
-
   var gulp = require('gulp'),
     karma = require('gulp-karma'),
     jshint = require('gulp-jshint'),
@@ -9,6 +8,7 @@
     uglify = require('gulp-uglify'),
     sourcemaps = require('gulp-sourcemaps'),
     ngAnnotate = require('gulp-ng-annotate'),
+    coveralls = require('gulp-coveralls'),
     stylish = require('jshint-stylish'),
     pkg = require('./package.json'),
     SRC_FILES = 'src/angular-trackjs.js',
@@ -16,12 +16,13 @@
       'bower_components/angular/angular.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       SRC_FILES,
-      'test/angular-trackjs.js'
+      'test/spec/**/*Spec.js'
     ],
     cleanItems = ['coverage', 'test/coverage', 'dist'],
     throwError = function (err) {
       throw err;
     };
+
 
   /**
    * Test Tasks
@@ -42,6 +43,11 @@
       .pipe(jshint.reporter(stylish))
       .pipe(jshint.reporter('fail'))
 
+  });
+
+  gulp.task('coveralls', ['test'], function() {
+    return gulp.src(['test/coverage/**/lcov.info'])
+      .pipe(coveralls());
   });
 
   /**
@@ -78,7 +84,7 @@
    * Task Groups
    */
 
-  gulp.task('test', ['jshint', 'karma']);
+  gulp.task('test', ['clean', 'jshint', 'karma']);
   gulp.task('default', ['test', 'build']);
 })();
 
