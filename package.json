@@ -5,7 +5,7 @@
   "description": "TrackJS angular exception decorator",
   "main": "dist/angular-trackjs.min.js",
   "scripts": {
-    "test": "gulp test",
+    "test": "bower install -f && gulp test",
     "build": "gulp build",
     "coveralls": "gulp coveralls"
   },

@@ -18,7 +18,7 @@
       SRC_FILES,
       'test/spec/**/*Spec.js'
     ],
-    cleanItems = ['coverage', 'test/coverage', 'dist'],
+    cleanItems = ['coverage', 'test/coverage'],
     throwError = function (err) {
       throw err;
     };
