@@ -2,7 +2,7 @@
 angular-trackjs
 ===============
 
-A simple AngularJS module for adding TrackJS to angulars exception handler.
+A simple AngularJS module for adding TrackJS to Angular's exception handler.
 
 You need to include the trackJS script before your angular app. You can signup at [trackjs.com](trackjs.com)
 
@@ -25,7 +25,9 @@ Add after angular files but before your app files
 
 ##Usage
 
-Just add the module as a depenancy. The module handles decorating Angular's $exceptionHandler.
+### Exception decorator
+
+Just add the module as a dependancy. The module handles decorating Angular's $exceptionHandler.
 
 	var myApp = angular.module('myApp', ['trackJs']);
 
@@ -39,8 +41,23 @@ If you want to pass options to trackJS, you can via the TrackJsProvider in your 
       		version: ""
     	});
 	});
+	
+### Custom events
+Angular-trackJS wraps the trackJS.track method in an injectable dependancy. 
 
-##Tests & Build
+	// using the myApp module example
+	
+    myApp.controller('MainCtrl', function($scope, trackJs) {
+        var foo = 'val';
+        $scope.onButtonPress = function(bar) {
+            if (bar !== $scope.foo) {
+                trackJs.track('a should have been b');
+            }
+            // continue logic
+        }
+    });
+
+##Tests & build
 angular-trackjs uses gulp to run test and build tasks
 
 	npm install
