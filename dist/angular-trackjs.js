@@ -36,8 +36,14 @@
 
   angularTrackJs.factory('trackJs', function ($window) {
     return {
-      track : function(message) {
+      track: function (message) {
         $window.trackJs.track(message);
+      },
+
+      configure: function (options) {
+        if (options) {
+          $window.trackJs.configure(options);
+        }
       }
     };
   });
