@@ -56,6 +56,16 @@ Angular-trackJS wraps the trackJS.track method in an injectable dependancy.
             // continue logic
         }
     });
+    
+### Configure trackJS after init
+There are a small amount of arguments that can be configured after trackJS has initilized. View the trackJS [docs](http://docs.trackjs.com/Api_Reference/trackJs.configure). for more info
+
+	// Setting config options in a controller
+	
+    myApp.controller('MainCtrl', function($scope, trackJs) {
+       trackJs.configure({sessionId: 2312341234});
+    });
+
 
 ##Tests & build
 angular-trackjs uses gulp to run test and build tasks

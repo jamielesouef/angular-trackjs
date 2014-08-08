@@ -1,5 +1,5 @@
 /*!
- * Angular TrackJs v0.0.4
+ * Angular TrackJs v0.0.5
  *
  * © 2014, Jamie Le Souef <jamielesouef@gmail.com>
  */
