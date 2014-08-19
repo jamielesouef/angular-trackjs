@@ -10,13 +10,8 @@ describe('Factory: exceptionHandlerDecorator', function () {
     $window = _$window_;
     trackJs = _trackJs_;
 
-    $window.trackJs = {
-      track : function (message) {},
-      configure: function(config) {}
-    };
+    $window.trackJs = jasmine.createSpyObj('trackJs', ['track', 'configure']);;
 
-    spyOn($window.trackJs, 'track');
-    spyOn($window.trackJs, 'configure');
   }));
 
   describe('when tracking a custom error', function (){

@@ -1,7 +1,7 @@
 {
   "name": "angular-trackjs",
   "title": "Angular TrackJs",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "TrackJS angular exception decorator",
   "main": "dist/angular-trackjs.min.js",
   "scripts": {

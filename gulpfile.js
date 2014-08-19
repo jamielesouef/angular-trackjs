@@ -94,5 +94,6 @@
 
   gulp.task('test', ['clean', 'jshint', 'karma']);
   gulp.task('default', ['test', 'build']);
+  gulp.task('dist', ['test', 'build']);
 })();
 

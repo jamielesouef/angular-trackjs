@@ -35,7 +35,7 @@
       },
 
       configure: function (options) {
-        if (options) {
+        if (options && $window) {
           $window.trackJs.configure(options);
         }
       }
@@ -45,7 +45,7 @@
 
   angularTrackJs.provider('TrackJs', function () {
     this.configure = function (options) {
-      if (options) {
+      if (options && window.trackJs) {
         window.trackJs.configure(options);
       }
     };

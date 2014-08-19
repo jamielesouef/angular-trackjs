@@ -19,12 +19,7 @@ describe('Factory: exceptionHandlerDecorator', function () {
 
     describe('when passed an exception and trackJS is available', function () {
         beforeEach(function () {
-            $window.trackJs = {
-                track: function () {
-                }
-            };
-
-            spyOn($window.trackJs, 'track');
+            $window.trackJs = jasmine.createSpyObj('trackJs', ['track', 'configure']);
         });
 
         it('should fire a tracking event', function () {

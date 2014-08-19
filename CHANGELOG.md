@@ -1,5 +1,9 @@
 #	CHANGELOG
 
+## 0.0.6
+
+- **Fixed** issue where angular-trackjs would throw an exception in tests
+
 ## 0.0.5
 
 Minor update
