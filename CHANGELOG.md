@@ -1,5 +1,11 @@
 #	CHANGELOG
 
+## 0.0.7
+
+- **Fixed** bug which broke the angular exception decorator
+- **Updated** code to be DRY
+- **Updated** tests
+
 ## 0.0.6
 
 - **Fixed** issue where angular-trackjs would throw an exception in tests
