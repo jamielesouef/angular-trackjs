@@ -21,7 +21,9 @@
   angularTrackJs.factory('exceptionHandlerDecorator', function ($window) {
     var decorate = function ($delegate) {
       return function (exception, cause) {
-        trackException(exception);
+        if ($window.trackJs) {
+          $window.trackJs.track(exception);
+        }
 
         $delegate(exception, cause);
       };
@@ -32,28 +34,28 @@
     };
   });
 
-  var trackException = function(exception) {
-    if (window.trackJs) {
-      window.trackJs.track(exception || '');
-    }
-  };
-
-  var configureTrackJs = function (options) {
-    if (window) {
-      window.trackJs.configure(options || {});
-    }
-  };
-
-  angularTrackJs.factory('trackJs', function () {
+  angularTrackJs.factory('trackJs', function ($window) {
     return {
-      track: trackException,
-      configure: configureTrackJs
+      track: function (message) {
+        $window.trackJs.track(message);
+      },
+
+      configure: function (options) {
+        if (options && $window.trackJs) {
+          $window.trackJs.configure(options);
+        }
+      }
     };
   });
 
 
   angularTrackJs.provider('TrackJs', function () {
-    this.configure = configureTrackJs;
+    this.configure = function (options) {
+      if (options && window.trackJs) {
+        window.trackJs.configure(options);
+      }
+    };
+
     this.$get = angular.noop;
   });
 })

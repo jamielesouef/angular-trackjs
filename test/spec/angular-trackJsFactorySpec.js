@@ -28,20 +28,4 @@ describe('Factory: exceptionHandlerDecorator', function () {
     });
 
   });
-
-  describe('when passing nothing to track or configure', function (){
-    beforeEach(function() {
-      trackJs.configure();
-      trackJs.track();
-    });
-
-    it('should call trackJs on the window object', function() {
-      expect(window.trackJs.track).toHaveBeenCalledWith(jasmine.any(String));
-    });
-
-    it('should have called the configuration method on the window object', function() {
-      expect(window.trackJs.configure).toHaveBeenCalledWith(jasmine.any(Object));
-    });
-
-  });
 });
