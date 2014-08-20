@@ -4,20 +4,34 @@
 
   var angularTrackJs = angular.module('trackJs', []);
 
+  var tryThrowNoTrackJSError = function () {
+    if (!window.trackJs) {
+      throw new Error('TrackJS not available');
+    }
+  };
+
+  var configureTrackJs = function (options) {
+    tryThrowNoTrackJSError();
+    window.trackJs.configure(options || {});
+  };
+
+  var trackException = function (exception) {
+    tryThrowNoTrackJSError();
+    window.trackJs.track(exception || '');
+  };
+
+  var decorateExceptionHandler = function ($delegate, exceptionHandlerDecorator) {
+    exceptionHandlerDecorator.decorate($delegate);
+  };
+
   angularTrackJs.config(function ($provide) {
-
-    $provide.decorator("$exceptionHandler", ["$delegate", "exceptionHandlerDecorator", function ($delegate, exceptionHandlerDecorator) {
-      exceptionHandlerDecorator.decorate($delegate);
-    }]);
-
+    $provide.decorator("$exceptionHandler", ["$delegate", "exceptionHandlerDecorator", decorateExceptionHandler]);
   });
 
-  angularTrackJs.factory('exceptionHandlerDecorator', function ($window) {
+  angularTrackJs.factory('exceptionHandlerDecorator', function () {
     var decorate = function ($delegate) {
       return function (exception, cause) {
-        if ($window.trackJs) {
-          $window.trackJs.track(exception);
-        }
+        trackException(exception);
 
         $delegate(exception, cause);
       };
@@ -28,28 +42,15 @@
     };
   });
 
-  angularTrackJs.factory('trackJs', function ($window) {
+  angularTrackJs.factory('trackJs', function () {
     return {
-      track: function (message) {
-        $window.trackJs.track(message);
-      },
-
-      configure: function (options) {
-        if (options && $window) {
-          $window.trackJs.configure(options);
-        }
-      }
+      track: trackException,
+      configure: configureTrackJs
     };
   });
 
-
   angularTrackJs.provider('TrackJs', function () {
-    this.configure = function (options) {
-      if (options && window.trackJs) {
-        window.trackJs.configure(options);
-      }
-    };
-
+    this.configure = configureTrackJs;
     this.$get = angular.noop;
   });
 })
