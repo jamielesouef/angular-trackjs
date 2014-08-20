@@ -20,18 +20,20 @@
     window.trackJs.track(exception || '');
   };
 
-  var decorateExceptionHandler = function ($delegate, exceptionHandlerDecorator) {
-    exceptionHandlerDecorator.decorate($delegate);
-  };
-
   angularTrackJs.config(function ($provide) {
-    $provide.decorator("$exceptionHandler", ["$delegate", "exceptionHandlerDecorator", decorateExceptionHandler]);
+
+    $provide.decorator("$exceptionHandler", ["$delegate", "exceptionHandlerDecorator", function ($delegate, exceptionHandlerDecorator) {
+      return exceptionHandlerDecorator.decorate($delegate);
+    }]);
+
   });
 
-  angularTrackJs.factory('exceptionHandlerDecorator', function () {
+  angularTrackJs.factory('exceptionHandlerDecorator', function ($window) {
     var decorate = function ($delegate) {
       return function (exception, cause) {
-        trackException(exception);
+        if ($window.trackJs) {
+          $window.trackJs.track(exception);
+        }
 
         $delegate(exception, cause);
       };
