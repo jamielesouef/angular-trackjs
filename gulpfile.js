@@ -63,9 +63,9 @@
         ' * © <%= new Date().getFullYear() %>, <%= author %>',
         ' */\n\n'
       ].join('\n'), pkg))
+      .pipe(ngAnnotate())
       .pipe(gulp.dest('dist/'))
       .pipe(rename('angular-trackjs.min.js'))
-      .pipe(ngAnnotate())
       .pipe(sourcemaps.init())
       .pipe(uglify())
       .pipe(header([
@@ -78,7 +78,7 @@
   gulp.task('clean', function () {
     return gulp.src(cleanItems)
       .pipe(clean());
-  })
+  });
 
   /**
    * Watch Task

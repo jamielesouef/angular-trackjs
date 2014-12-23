@@ -10,15 +10,13 @@
 
   var angularTrackJs = angular.module('trackJs', []);
 
-  angularTrackJs.config(function ($provide) {
-
+  angularTrackJs.config(["$provide", function ($provide) {
     $provide.decorator("$exceptionHandler", ["$delegate", "exceptionHandlerDecorator", function ($delegate, exceptionHandlerDecorator) {
       return exceptionHandlerDecorator.decorate($delegate);
     }]);
+  }]);
 
-  });
-
-  angularTrackJs.factory('exceptionHandlerDecorator', function ($window) {
+  angularTrackJs.factory('exceptionHandlerDecorator', ["$window", function ($window) {
     var decorate = function ($delegate) {
       return function (exception, cause) {
         if ($window.trackJs) {
@@ -32,9 +30,9 @@
     return {
       decorate: decorate
     };
-  });
+  }]);
 
-  angularTrackJs.factory('trackJs', function ($window) {
+  angularTrackJs.factory('trackJs', ["$window", function ($window) {
     return {
       track: function (message) {
         $window.trackJs.track(message);
@@ -46,7 +44,7 @@
         }
       }
     };
-  });
+  }]);
 
 
   angularTrackJs.provider('TrackJs', function () {

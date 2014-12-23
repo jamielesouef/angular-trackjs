@@ -5,11 +5,9 @@
   var angularTrackJs = angular.module('trackJs', []);
 
   angularTrackJs.config(function ($provide) {
-
-    $provide.decorator("$exceptionHandler", ["$delegate", "exceptionHandlerDecorator", function ($delegate, exceptionHandlerDecorator) {
+    $provide.decorator("$exceptionHandler", function ($delegate, exceptionHandlerDecorator) {
       return exceptionHandlerDecorator.decorate($delegate);
-    }]);
-
+    });
   });
 
   angularTrackJs.factory('exceptionHandlerDecorator', function ($window) {
