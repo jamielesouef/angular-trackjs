@@ -34,19 +34,19 @@ Just add the module as a dependancy. The module handles decorating Angular's $ex
 If you want to pass options to trackJS, you can via the TrackJsProvider in your apps config block. All options can be found in the trackJS API [docs](http://docs.trackjs.com/Api_Reference/trackJs.configure).
 
 	myApp.config(function (TrackJsProvider) {
-  		TrackJsProvider.config(
+  		TrackJsProvider.configure(
     	{
       		sessionId: "",
       		userId: "",
       		version: ""
     	});
 	});
-	
+
 ### Custom events
-Angular-trackJS wraps the trackJS.track method in an injectable dependancy. 
+Angular-trackJS wraps the trackJS.track method in an injectable dependancy.
 
 	// using the myApp module example
-	
+
     myApp.controller('MainCtrl', function($scope, trackJs) {
         var foo = 'val';
         $scope.onButtonPress = function(bar) {
@@ -56,12 +56,12 @@ Angular-trackJS wraps the trackJS.track method in an injectable dependancy.
             // continue logic
         }
     });
-    
+
 ### Configure trackJS after init
 There are a small amount of arguments that can be configured after trackJS has initilized. View the trackJS [docs](http://docs.trackjs.com/Api_Reference/trackJs.configure). for more info
 
 	// Setting config options in a controller
-	
+
     myApp.controller('MainCtrl', function($scope, trackJs) {
        trackJs.configure({sessionId: 2312341234});
     });
