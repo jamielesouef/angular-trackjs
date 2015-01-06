@@ -19,8 +19,8 @@
       'test/spec/**/*Spec.js'
     ],
     cleanItems = ['coverage', 'test/coverage'],
-    throwError = function (err) {
-      throw err;
+    logError = function (err) {
+      console.log(err.toString());
     };
 
 
@@ -34,7 +34,7 @@
         configFile: 'karma.conf.js',
         action: 'run'
       }))
-      .on('error', throwError);
+      .on('error', logError);
   });
 
   gulp.task('jshint', function () {
@@ -85,7 +85,7 @@
    */
 
   gulp.task('watch', function () {
-    gulp.watch(['src/angular-trackjs.js', 'test/spec/**/*.js'], ['default']);
+    gulp.watch(['src/*.js', 'test/spec/**/*.js'], ['default']);
   });
 
   /**

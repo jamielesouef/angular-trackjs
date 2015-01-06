@@ -1,54 +1,100 @@
 (function (angular) {
 
-  'use strict';
+    'use strict';
 
-  var angularTrackJs = angular.module('trackJs', []);
+    angular.module('trackJs', []);
 
-  angularTrackJs.config(function ($provide) {
-    $provide.decorator("$exceptionHandler", function ($delegate, exceptionHandlerDecorator) {
-      return exceptionHandlerDecorator.decorate($delegate);
+    var configure = function (windowObj) {
+        return function (options) {
+            if (options && windowObj.trackJs) {
+                windowObj.trackJs.configure(options);
+            }
+        };
+    };
+
+    angular.module('trackJs').config(function ($provide) {
+        $provide.decorator("$exceptionHandler", function ($delegate, exceptionHandlerDecorator) {
+            return exceptionHandlerDecorator.decorate($delegate);
+        });
     });
-  });
 
-  angularTrackJs.factory('exceptionHandlerDecorator', function ($window) {
-    var decorate = function ($delegate) {
-      return function (exception, cause) {
-        if ($window.trackJs) {
-          $window.trackJs.track(exception);
-        }
+    angular.module('trackJs').factory('exceptionHandlerDecorator', function ($window) {
+        var decorate = function ($delegate) {
+            return function (exception, cause) {
+                if ($window.trackJs) {
+                    $window.trackJs.track(exception);
+                }
 
-        $delegate(exception, cause);
-      };
-    };
+                $delegate(exception, cause);
+            };
+        };
 
-    return {
-      decorate: decorate
-    };
-  });
+        return {
+            decorate: decorate
+        };
+    });
 
-  angularTrackJs.factory('trackJs', function ($window) {
-    return {
-      track: function (message) {
-        $window.trackJs.track(message);
-      },
+    angular.module('trackJs').factory('trackJs', function ($window) {
 
-      configure: function (options) {
-        if (options && $window.trackJs) {
-          $window.trackJs.configure(options);
-        }
-      }
-    };
-  });
+        var ignoreErrorList = [];
 
+        var track = function (message) {
+            $window.trackJs.track(message);
+        };
 
-  angularTrackJs.provider('TrackJs', function () {
-    this.configure = function (options) {
-      if (options && window.trackJs) {
-        window.trackJs.configure(options);
-      }
-    };
+        var ignore = function (list) {
+            if (angular.isArray(list)) {
+                ignoreErrorList = ignoreErrorList.concat(list);
+            } else {
+                ignoreErrorList.push(list);
+            }
 
-    this.$get = angular.noop;
-  });
+            var onError = function (payload) {
+                var validateError = function (errorCriteria) {
+                    var matchedCriteria = [],
+                        networkResponse = payload.network[0];
+
+                    angular.forEach(errorCriteria, function (errorTest, responseProp) {
+                        if (errorTest instanceof RegExp) {
+                            matchedCriteria.push(errorTest.test(networkResponse[responseProp]));
+                        } else {
+                            matchedCriteria.push(networkResponse[responseProp] === errorTest);
+                        }
+                    });
+
+                    return matchedCriteria.every(function (isTrue) {
+                        return isTrue === true;
+                    });
+
+                };
+
+                var hasError = function (error) {
+                    return error === true;
+                };
+
+                var logError = ignoreErrorList
+                    .map(validateError)
+                    .some(hasError);
+
+                return !logError;
+            };
+
+            this.configure({
+                onError: onError
+            });
+        };
+
+        return {
+            track: track,
+            ignore: ignore,
+            configure: configure($window)
+        };
+    });
+
+    angular.module('trackJs').provider('TrackJs', function () {
+        this.configure = configure(window);
+        this.$get = angular.noop;
+    });
+
 })
 (angular);
