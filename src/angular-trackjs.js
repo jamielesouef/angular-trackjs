@@ -44,7 +44,7 @@
         };
 
         var ignore = function (list) {
-`           ignoreErrorList = ignoreErrorList.concat(list);
+            ignoreErrorList = ignoreErrorList.concat(list);
 
             var onError = function (payload) {
                 var logError;
