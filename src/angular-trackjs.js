@@ -6,6 +6,7 @@
 
     var configure = function (windowObj) {
         return function (options) {
+
             if (options && windowObj.trackJs) {
                 windowObj.trackJs.configure(options);
             }
@@ -43,13 +44,11 @@
         };
 
         var ignore = function (list) {
-            if (angular.isArray(list)) {
-                ignoreErrorList = ignoreErrorList.concat(list);
-            } else {
-                ignoreErrorList.push(list);
-            }
+`           ignoreErrorList = ignoreErrorList.concat(list);
 
             var onError = function (payload) {
+                var logError;
+
                 var validateError = function (errorCriteria) {
                     var matchedCriteria = [],
                         networkResponse = payload.network[0];
@@ -63,16 +62,16 @@
                     });
 
                     return matchedCriteria.every(function (isTrue) {
-                        return isTrue === true;
+                        return isTrue;
                     });
 
                 };
 
                 var hasError = function (error) {
-                    return error === true;
+                    return error;
                 };
 
-                var logError = ignoreErrorList
+                logError = ignoreErrorList
                     .map(validateError)
                     .some(hasError);
 
