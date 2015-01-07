@@ -56,9 +56,35 @@ Angular-trackJS wraps the trackJS.track method in an injectable dependancy.
             // continue logic
         }
     });
+    
+### Ignore errors
+Sets a whitelist of expected errors so they are not sent up to trackJs. You can check against any of trackJs onError network properties.
+
+Ignore objects can check against String, Int or RegExp
+
+	// using the myApp module example
+
+    myApp.run(function(trackJs) {
+		trackJs.ignore(
+		    [
+		        {
+		            statusCode: 404,
+		            method: /GET|POST/,
+		            url: "http://myurl.com"
+		
+		        },
+		        {
+		            statusCode: 401,
+		            method: "POST",
+		            url: /login/
+		        }
+		    ]
+		);     
+    });
+  
 
 ### Configure trackJS after init
-There are a small amount of arguments that can be configured after trackJS has initilized. View the trackJS [docs](http://docs.trackjs.com/Api_Reference/trackJs.configure). for more info
+There are a small amount of arguments that can be configured after trackJS has initialised. View the trackJS [docs](http://docs.trackjs.com/Api_Reference/trackJs.configure). for more info
 
 	// Setting config options in a controller
 

@@ -1,5 +1,8 @@
 #	CHANGELOG
 
+## 0.0.9
+- **Feature** Added ignore method to the trackJs factory. Ignored  / expected errors won't be sent off to trackJS keeping the noise down.
+
 ## 0.0.8
 - **Fixed** readme typo for configure method on provider [bb61597](https://github.com/jamielesouef/angular-trackjs/commit/ed325481c9dc50cf64a0ef8b27cdc29bc1648733)
 - **Fixed** Run unminified distributable through ngAnnotate to allow source to be minified by consumer [ed32548](https://github.com/jamielesouef/angular-trackjs/commit/ed325481c9dc50cf64a0ef8b27cdc29bc1648733)
