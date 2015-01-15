@@ -12,6 +12,9 @@
   ],
   "license": "MIT",
   "private": false,
+  "main": [
+    "dist/angular-trackjs.min.js"
+  ],
   "ignore": [
     "**/.*",
     "node_modules",
