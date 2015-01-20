@@ -7,13 +7,13 @@ describe('Factory: exceptionHandlerDecorator', function () {
     var angularTrackJs,
         trackJs,
         payload,
-        trackError = true;
+        trackError;
 
     window.trackJs = {
         track: function (message) {
             trackError = window.trackJs.onError(payload);
         },
-        onError: function() {
+        onError: function () {
             //return true;
         },
         configure: function (option) {
@@ -44,51 +44,175 @@ describe('Factory: exceptionHandlerDecorator', function () {
     });
 
     describe("ignore: ", function () {
-        describe("when the error is in the ignore list", function () {
-            beforeEach(function () {
-                payload = {
-                    network: [
-                        {
-                            statusCode: 404,
-                            method: 'GET'
-                        }
-                    ]
-                };
 
-                angularTrackJs.ignore([{
-                    statusCode: 404,
-                    method: /get/i
-                }]);
-
-                angularTrackJs.track('error');
-            });
-
-            it('should not call the track method', function () {
-                expect(trackError).toBe(false);
-            });
+        beforeEach(function () {
+            payload = {
+                message: '404 Not Found',
+                url: 'http://pageurl.com',
+                network: [
+                    {
+                        statusCode: 200,
+                        method: 'GET',
+                        url: 'http://networkrequesturl.com'
+                    },
+                    {
+                        statusCode: 200,
+                        method: 'GET',
+                        url: 'http://networkrequesturl.com'
+                    },
+                    {
+                        statusCode: 404,
+                        statusMessage: 'Not Found',
+                        method: 'GET',
+                        url: 'http://networkrequesturl.com'
+                    }
+                ]
+            };
         });
 
-        describe("when the error is not in the ignore list", function () {
-            beforeEach(function () {
-                payload = {
-                    network: [
-                        {
-                            statusCode: 404,
-                            method: 'GET'
-                        }
-                    ]
-                };
+        describe("given an ignore list has been added", function () {
 
-                angularTrackJs.ignore([{
-                    statusCode: 401,
-                    method: /get/i
-                }]);
+            describe("when the pageUrl", function () {
 
-                angularTrackJs.track('error');
+                describe("does not match", function () {
+
+                    beforeEach(function () {
+                        angularTrackJs.ignore([{
+                            pageUrl: 'http://noMatch.com'
+                        }]);
+
+                        angularTrackJs.track('error');
+                    });
+
+                    it('should call the track method', function () {
+                        expect(trackError).toBe(true);
+                    });
+                });
+
+                describe("does match", function () {
+
+                    beforeEach(function () {
+                        angularTrackJs.ignore([{
+                            pageUrl: 'http://pageurl.com'
+                        }]);
+
+                        angularTrackJs.track('error');
+                    });
+
+                    it('should not call the track method', function () {
+                        expect(trackError).toBe(false);
+                    });
+                });
             });
 
-            it('should not call the track method', function () {
-                expect(trackError).toBe(true);
+            describe("when the message", function () {
+
+                describe("does not match", function () {
+
+                    beforeEach(function () {
+                        angularTrackJs.ignore([{
+                            message: '401 Not Found'
+                        }]);
+
+                        angularTrackJs.track('error');
+                    });
+
+                    it('should call the track method', function () {
+                        expect(trackError).toBe(true);
+                    });
+
+                });
+
+                describe("does match", function () {
+
+                    beforeEach(function () {
+                        angularTrackJs.ignore([{
+                            message: '404 Not Found'
+                        }]);
+
+                        angularTrackJs.track('error');
+                    });
+
+                    it('should not call the track method', function () {
+                        expect(trackError).toBe(false);
+                    });
+
+                });
+
+            });
+
+            describe("when the a network property", function () {
+
+                describe("does not match", function () {
+                    beforeEach(function () {
+                        angularTrackJs.ignore([{
+                            statusCode: 401,
+                            method: /get/i
+                        }]);
+
+                        angularTrackJs.track('error');
+                    });
+
+                    it('should call the track method', function () {
+                        expect(trackError).toBe(true);
+                    });
+                });
+
+                describe("does match", function () {
+                    beforeEach(function () {
+                        angularTrackJs.ignore([{
+                            statusCode: 404,
+                            method: /GET/i
+                        }]);
+
+                        angularTrackJs.track('error');
+                    });
+
+                    it('should not call the track method', function () {
+                        expect(trackError).toBe(false);
+                    });
+                });
+            });
+
+            describe("when the a all properties", function () {
+
+                describe("do not match", function () {
+                    beforeEach(function () {
+                        angularTrackJs.ignore([{
+                            message : '401 Not Found',
+                            pageUrl: 'http://nomatch.com',
+                            statusCode: 401,
+                            statusMessage: 'Found',
+                            method: /POST/,
+                            url: 'http://whatnetwork.com'
+                        }]);
+
+                        angularTrackJs.track('error');
+                    });
+
+                    it('should call the track method', function () {
+                        expect(trackError).toBe(true);
+                    });
+                });
+
+                describe("do match", function () {
+                    beforeEach(function () {
+                        angularTrackJs.ignore([{
+                            message : '404 Not Found',
+                            pageUrl: 'http://pageurl.com',
+                            statusCode: 404,
+                            statusMessage: 'Not Found',
+                            method: 'GET',
+                            url: 'http://networkrequesturl.com'
+                        }]);
+
+                        angularTrackJs.track('error');
+                    });
+
+                    it('should not call the track method', function () {
+                        expect(trackError).toBe(false);
+                    });
+                });
             });
         });
     });

@@ -47,35 +47,47 @@
             ignoreErrorList = ignoreErrorList.concat(list);
 
             var onError = function (payload) {
-                var logError;
 
-                var validateError = function (errorCriteria) {
-                    var matchedCriteria = [],
-                        networkResponse = payload.network[0];
+                var test = function (what, where) {
+                    return (what instanceof RegExp) ? what.test(where) : what === where;
+                };
 
-                    angular.forEach(errorCriteria, function (errorTest, responseProp) {
-                        if (errorTest instanceof RegExp) {
-                            matchedCriteria.push(errorTest.test(networkResponse[responseProp]));
+                var checkNetwork = function (expectedValue, networkProperty) {
+                    return payload.network
+                        .map(function (request) {
+                            return test(expectedValue, request[networkProperty]);
+                        })
+                        .some(function (error) {
+                            return test(error, true);
+                        });
+                };
+
+                var validateError = function (errorCheck) {
+
+                    var errorMatch = [];
+
+                    for (var property in errorCheck) {
+                        var expectedValue = errorCheck[property];
+
+                        if (property === 'pageUrl') {
+                            errorMatch.push(test(expectedValue, payload.url));
+                        } else if (property === 'message') {
+                            errorMatch.push(test(errorCheck.message, payload.message));
                         } else {
-                            matchedCriteria.push(networkResponse[responseProp] === errorTest);
+                            errorMatch.push(checkNetwork(expectedValue, property));
                         }
+                    }
+
+                    errorMatch = errorMatch.every(function (error) {
+                        return test(error, true);
                     });
 
-                    return matchedCriteria.every(function (isTrue) {
-                        return isTrue;
-                    });
-
+                    return errorMatch;
                 };
 
-                var hasError = function (error) {
-                    return error;
-                };
-
-                logError = ignoreErrorList
-                    .map(validateError)
-                    .some(hasError);
-
-                return !logError;
+                return !ignoreErrorList.map(validateError).some(function (error) {
+                    return test(error, true);
+                });
             };
 
             this.configure({
