@@ -67,18 +67,14 @@ Ignore objects can check against String, Int or RegExp
 	// using the myApp module example
 
 	myApp.run(function (trackJs) {
-    	trackJs.ignore(
-       	 [
-       	     angularTrackJs.ignore([{
-       	         message: '401 Not Found',
-       	         pageUrl: 'http://nomatch.com',
-       	         statusCode: 401,
-       	         statusMessage: 'Found',
-       	         method: /POST/,
-       	         url: 'http://whatnetwork.com'
-       	     }])
-       	 ]
-    	);
+    	angularTrackJs.ignore([{
+       	 	message: '401 Not Found',
+        	pageUrl: 'http://nomatch.com',
+        	statusCode: 401,
+        	statusMessage: 'Found',
+        	method: /POST/,
+        	url: 'http://whatnetwork.com'
+    	}])
 	});
   
 
