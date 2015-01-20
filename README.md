@@ -58,29 +58,28 @@ Angular-trackJS wraps the trackJS.track method in an injectable dependancy.
     });
     
 ### Ignore errors
-Sets a whitelist of expected errors so they are not sent up to trackJs. You can check against any of trackJs onError network properties.
+Sets a whitelist of expected errors so they are not sent up to trackJs. You can check against trackJs onError payload object network properties (`payload.netowrk.*`), `payload.url` and `payload.message`.
 
 Ignore objects can check against String, Int or RegExp
 
+**Note** that `payload.url` is checked using the `pageUrl` property. This is because the network objects also use the property url to log the request url
+
 	// using the myApp module example
 
-    myApp.run(function(trackJs) {
-		trackJs.ignore(
-		    [
-		        {
-		            statusCode: 404,
-		            method: /GET|POST/,
-		            url: "http://myurl.com"
-		
-		        },
-		        {
-		            statusCode: 401,
-		            method: "POST",
-		            url: /login/
-		        }
-		    ]
-		);     
-    });
+	myApp.run(function (trackJs) {
+    	trackJs.ignore(
+       	 [
+       	     angularTrackJs.ignore([{
+       	         message: '401 Not Found',
+       	         pageUrl: 'http://nomatch.com',
+       	         statusCode: 401,
+       	         statusMessage: 'Found',
+       	         method: /POST/,
+       	         url: 'http://whatnetwork.com'
+       	     }])
+       	 ]
+    	);
+	});
   
 
 ### Configure trackJS after init
