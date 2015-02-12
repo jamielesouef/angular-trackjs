@@ -31,16 +31,17 @@ Just add the module as a dependancy. The module handles decorating Angular's $ex
 
 	var myApp = angular.module('myApp', ['trackJs']);
 
-If you want to pass options to trackJS, you can via the TrackJsProvider in your apps config block. All options can be found in the trackJS API [docs](http://docs.trackjs.com/Api_Reference/trackJs.configure).
+If you want to pass options to trackJS, you can via the TrackJsProvider in your app's config block. All options can be found in the trackJS API [docs](http://docs.trackjs.com/JavaScript_Api_Reference/trackJs.configure).
 
 	myApp.config(function (TrackJsProvider) {
-  		TrackJsProvider.configure(
-    	{
+  		TrackJsProvider.configure({
       		sessionId: "",
       		userId: "",
       		version: ""
     	});
 	});
+
+Note that some options, e.g. `application` can only be set prior to the inclusion of the Tracker script, via the `window._trackJs` object. See [docs](http://docs.trackjs.com/JavaScript_Api_Reference/Initialization).
 
 ### Custom events
 Angular-trackJS wraps the trackJS.track method in an injectable dependancy.
@@ -56,7 +57,7 @@ Angular-trackJS wraps the trackJS.track method in an injectable dependancy.
             // continue logic
         }
     });
-    
+
 ### Ignore errors
 Sets a whitelist of expected errors so they are not sent up to trackJs. You can check against trackJs onError payload object network properties (`payload.netowrk.*`), `payload.url` and `payload.message`.
 
@@ -76,10 +77,10 @@ Ignore objects can check against String, Int or RegExp
         	url: 'http://whatnetwork.com'
     	}])
 	});
-  
+
 
 ### Configure trackJS after init
-There are a small amount of arguments that can be configured after trackJS has initialised. View the trackJS [docs](http://docs.trackjs.com/Api_Reference/trackJs.configure). for more info
+There are a small amount of arguments that can be configured after trackJS has initialised. View the trackJS [docs](http://docs.trackjs.com/JavaScript_Api_Reference/trackJs.configure) for more info.
 
 	// Setting config options in a controller
 
