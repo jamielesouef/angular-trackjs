@@ -1,6 +1,8 @@
-[![Build Status](https://travis-ci.org/jamielesouef/angular-trackjs.svg?branch=master)](https://travis-ci.org/jamielesouef/angular-trackjs) [![Coverage Status](https://coveralls.io/repos/jamielesouef/angular-trackjs/badge.png?branch=master)](https://coveralls.io/r/jamielesouef/angular-trackjs?branch=master)
 angular-trackjs
 ===============
+
+Based on https://github.com/jamielesouef/angular-trackjs.git
+
 
 A simple AngularJS module for adding TrackJS to Angular's exception handler.
 
@@ -16,7 +18,7 @@ You need to include the trackJS script before your angular app. You can signup a
 
 In your vendors folder:
 
-	git clone https://github.com/jamielesouef/angular-trackjs.git
+	git clone https://github.com/SEEK-Jobs/angular-trackjs.git
 
 ###Add to your project
 Add after angular files but before your app files
@@ -93,6 +95,5 @@ There are a small amount of arguments that can be configured after trackJS has i
 angular-trackjs uses gulp to run test and build tasks
 
 	npm install
-	gulp test
-	gulp build
-
+	npm test
+	npm run build

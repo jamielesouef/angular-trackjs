@@ -1,7 +1,7 @@
 {
   "name": "angular-trackjs",
   "title": "Angular TrackJs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TrackJS angular exception decorator",
   "main": "dist/angular-trackjs.min.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "coveralls": "gulp coveralls",
     "postinstall": "node_modules/.bin/bower install"
   },
-  "author": "Jamie Le Souef <jamielesouef@gmail.com>",
+  "author": "Jamie Le Souef <jamielesouef@gmail.com> and Boris Kvid <bkvid@seek.com.au>/SEEK Ltd.",
   "license": "MIT",
   "devDependencies": {
     "gulp": "^3.8.6",

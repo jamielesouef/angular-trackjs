@@ -1,9 +1,10 @@
 {
   "name": "angular-trackjs",
-  "version": "0.1.0",
-  "homepage": "https://github.com/jamielesouef/angular-trackjs",
+  "version": "0.1.1",
+  "homepage": "https://github.com/SEEK-Jobs/angular-trackjs",
   "authors": [
-    "Jamie Le Souef <jamielesouef@gmail.com>"
+    "Jamie Le Souef <jamielesouef@gmail.com>",
+    "Boris Kvid <bkvid@seek.com.au>"
   ],
   "description": "TrackJS angular exception decorator",
   "keywords": [

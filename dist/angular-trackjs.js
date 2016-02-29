@@ -1,7 +1,7 @@
 /*!
- * Angular TrackJs v0.1.0
+ * Angular TrackJs v0.1.1
  *
- * © 2015, Jamie Le Souef <jamielesouef@gmail.com>
+ * © 2016, Jamie Le Souef <jamielesouef@gmail.com> and Boris Kvid <bkvid@seek.com.au>/SEEK Ltd.
  */
 
 (function (angular) {
