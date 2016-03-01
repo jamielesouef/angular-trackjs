@@ -1,11 +1,14 @@
 #	CHANGE LOG
 
+## 0.1.1
+- **Support** verified working with latest TrackJs 2.2.0 (e.g. the error message format has changed a while ago in version 2.1.8 http://docs.trackjs.com/tracker/changelog.html )
+
 ## 0.1.0
 - **Finalised** ignore method. Re written to include checking the error message and error url along with all the network properties
 - **Add** main files to bower.json [75ff034](https://github.com/jamielesouef/angular-trackjs/commit/75ff034e1f9c9d9d290936c123c086e1dff3f43d)
 
 ## 0.0.9
-- **Feature** Added ignore method to the trackJs factory. Ignored  / expected errors won't be sent off to trackJS keeping the noise down.
+- **Feature** Added ignore method to the trackJs factory. Ignored / expected errors won't be sent off to trackJS keeping the noise down.
 
 ## 0.0.8
 - **Fixed** readme typo for configure method on provider [bb61597](https://github.com/jamielesouef/angular-trackjs/commit/ed325481c9dc50cf64a0ef8b27cdc29bc1648733)
