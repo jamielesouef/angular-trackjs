@@ -1,7 +1,7 @@
 #	CHANGE LOG
 
 ## 0.1.1
-- **Support** latest TrackJs 2.2.0 (e.g. the error message format has changed a while ago in version 2.1.8 http://docs.trackjs.com/tracker/changelog.html )
+- **Support** verified working with latest TrackJs 2.2.0 (e.g. the error message format has changed a while ago in version 2.1.8 http://docs.trackjs.com/tracker/changelog.html )
 
 ## 0.1.0
 - **Finalised** ignore method. Re written to include checking the error message and error url along with all the network properties

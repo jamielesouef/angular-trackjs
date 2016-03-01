@@ -5,14 +5,12 @@
  */
 
 (function (angular) {
-
     'use strict';
 
     angular.module('trackJs', []);
 
     var configure = function (windowObj) {
         return function (options) {
-
             if (options && windowObj.trackJs) {
                 windowObj.trackJs.configure(options);
             }
@@ -42,58 +40,66 @@
     }]);
 
     angular.module('trackJs').factory('trackJs', ["$window", function ($window) {
-
-        var ignoreErrorList = [];
+        var ignoreRules = [];
 
         var track = function (message) {
             $window.trackJs.track(message);
         };
 
-        var ignore = function (list) {
-            ignoreErrorList = ignoreErrorList.concat(list);
+        var ignore = function (newRules) {
+            ignoreRules = ignoreRules.concat(newRules);
 
-            var onError = function (payload) {
+            var onError = function (errorPayload) {
+                var isToBeIgnored;
 
-                var test = function (what, where) {
-                    return (what instanceof RegExp) ? what.test(where) : what === where;
+                var isMatchStandard = function (rulePropValueOrRegex, errorValue) {
+                    var isAssertTrue = rulePropValueOrRegex instanceof RegExp ? rulePropValueOrRegex.test(errorValue) : rulePropValueOrRegex === errorValue;
+                    return isAssertTrue;
                 };
 
-                var checkNetwork = function (expectedValue, networkProperty) {
-                    return payload.network
-                        .map(function (request) {
-                            return test(expectedValue, request[networkProperty]);
-                        })
-                        .some(function (error) {
-                            return test(error, true);
-                        });
+                var isMatchNetwork = function (rulePropValueOrRegex, networkProperty) {
+                    var isAssertTrue = errorPayload.network
+                            .map(function (networkObj) {
+                                return isMatchStandard(rulePropValueOrRegex, networkObj[networkProperty]);
+                            })
+                            .some(function (isMatching) {
+                                return isMatching === true;
+                            });
+
+                    return isAssertTrue;
                 };
 
-                var validateError = function (errorCheck) {
+                var isMatching = function (rule) {
+                    var propMatchResults = [];
+                    var isFullyMatchingWithIgnoreRule;
 
-                    var errorMatch = [];
-
-                    for (var property in errorCheck) {
-                        var expectedValue = errorCheck[property];
+                    for (var property in rule) {
+                        var expectedValue = rule[property];
 
                         if (property === 'pageUrl') {
-                            errorMatch.push(test(expectedValue, payload.url));
+                            propMatchResults.push(isMatchStandard(expectedValue, errorPayload.url));
                         } else if (property === 'message') {
-                            errorMatch.push(test(errorCheck.message, payload.message));
+                            propMatchResults.push(isMatchStandard(rule.message, errorPayload.message));
                         } else {
-                            errorMatch.push(checkNetwork(expectedValue, property));
+                            propMatchResults.push(isMatchNetwork(expectedValue, property));
                         }
                     }
 
-                    errorMatch = errorMatch.every(function (error) {
-                        return test(error, true);
+                    isFullyMatchingWithIgnoreRule = propMatchResults.every(function (submatchingResult) {
+                        return submatchingResult === true;
                     });
 
-                    return errorMatch;
+                    return isFullyMatchingWithIgnoreRule;
                 };
 
-                return !ignoreErrorList.map(validateError).some(function (error) {
-                    return test(error, true);
-                });
+
+                isToBeIgnored = ignoreRules
+                    .map(isMatching)
+                    .some(function (isMatching) {
+                        return isMatching === true;
+                    });
+
+                return !isToBeIgnored; // Returning inverse of isToBeIgnored. (A false return value means error will be swallowed.)
             };
 
             this.configure({
@@ -113,5 +119,4 @@
         this.$get = angular.noop;
     });
 
-})
-(angular);
+})(angular);
